@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="E-commerce web page simulation with responsive design and dynamic features">
+    <title>Victor's Store</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Animate.css -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <!-- jsPDF library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <style>
+        .offers-section {
+            background: linear-gradient(135deg, #000000 0%, #000000 100%);
+            padding: 3rem 0;
+            margin: 2rem 0;
+        }
+        .offer-card {
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 15px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+            transition: transform 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        .offer-card:hover {
+            transform: translateY(-10px);
+        }
+        .offer-icon {
+            font-size: 2.5rem;
+            color: #ff6b6b;
+            margin-bottom: 1rem;
+        }
+        .discount-badge {
+            position: absolute;
+            top: -10px;
+            right: -10px;
+            background: #ff4757;
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 25px;
+            font-weight: bold;
+            animation: pulse 2s infinite;
+        }
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+        .flash-deal {
+            animation: flash 1.5s infinite;
+            color: #ff4757;
+        }
+        @keyframes flash {
+            0% { opacity: 1; }
+            50% { opacity: 0.5; }
+            100% { opacity: 1; }
+        }
+    </style>
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- [Previous header code remains the same] -->
+
+    <main>
+        <!-- [Previous hero section remains the same] -->
+
+        <!-- New Offers Section -->
+        <section class="offers-section">
+            <div class="container">
+                <h2 class="text-center text-white mb-4">
+                    <i class="fas fa-bolt flash-deal"></i> 
+                    ¡OFERTAS ESPECIALES!
+                    <i class="fas fa-bolt flash-deal"></i>
+                </h2>
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="offer-card animate__animated animate__fadeInLeft">
+                            <span class="discount-badge">-30%</span>
+                            <div class="text-center">
+                                <i class="fas fa-fire offer-icon animate__animated animate__bounce animate__infinite"></i>
+                                <h3>Oferta del Día</h3>
+                                <p>¡Descuentos increíbles solo por hoy!</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="offer-card animate__animated animate__fadeInUp">
+                            <span class="discount-badge">2x1</span>
+                            <div class="text-center">
+                                <i class="fas fa-gift offer-icon animate__animated animate__tada animate__infinite"></i>
+                                <h3>Promoción Especial</h3>
+                                <p>Lleva dos y paga uno en productos seleccionados</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="offer-card animate__animated animate__fadeInRight">
+                            <span class="discount-badge">NUEVO</span>
+                            <div class="text-center">
+                                <i class="fas fa-clock offer-icon animate__animated animate__pulse animate__infinite"></i>
+                                <h3>Oferta Relámpago</h3>
+                                <p>¡Date prisa! Ofertas por tiempo limitado</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- [Rest of the code remains the same] -->
+    </main>
+
+    <!-- [Previous footer and scripts remain the same] -->
+</body>
+</html>
+    <!-- jsPDF library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Header -->
+    <header class="fixed-top">
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+            <div class="container">
+                <a class="navbar-brand" href="#">
+                    <img src="https://img.pikbest.com/origin/10/41/48/02npIkbEsTYSC.png!w700wp" alt="Logo" width="40" class="me-2">
+                    Victor's Store
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav me-auto">
+                        <li class="nav-item">
+                            <a class="nav-link" href="#home">Inicio</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#categories">Productos</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="contacto.html">Contactos</a>
+                        </li>
+                    </ul>
+                    <div class="d-flex">
+                        <div class="search-container me-3">
+                            <input type="text" id="searchInput" class="form-control" placeholder="Buscar productos...">
+                        </div>
+                        <button class="btn btn-outline-light position-relative" data-bs-toggle="modal" data-bs-target="#cartModal">
+                            <i class="fas fa-shopping-cart"></i>
+                            <span id="cart-count" class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                                0
+                            </span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Main Content -->
+    <main>
+        <!-- Hero Section -->
+        <section id="home" class="hero-section">
+            <div class="container text-center">
+                <h1 class="display-4">Bienvenido a nuestra tienda</h1>
+                <p class="lead">Descubre productos increíbles a precios increíbles</p>
+            </div>
+        </section>
+
+        <!-- Products Section -->
+        <section id="categories" class="products-section">
+            <div class="container">
+                <h2 class="text-center mb-4">Nuestros Productos</h2>
+                <div id="product-list" class="row g-4">
+                    <!-- Products will be loaded here dynamically -->
+                </div>
+            </div>
+        </section>
+
+        <!-- Cart Modal -->
+        <div class="modal fade" id="cartModal" tabindex="-1">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Carrito de Compras</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div id="cart-items" class="cart-items">
+                            <!-- Cart items will be loaded here -->
+                        </div>
+                        <div class="cart-total mt-3">
+                            <h4>Total: $<span id="cart-total">0.00</span></h4>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Seguir Comprando</button>
+                        <button type="button" class="btn btn-primary" id="checkout-btn">Proceder al Pago</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Payment Modal -->
+        <div class="modal fade" id="paymentModal" tabindex="-1">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Datos de Pago</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form id="payment-form">
+                            <div class="mb-3">
+                                <label for="cardName" class="form-label">Nombre en la tarjeta</label>
+                                <input type="text" class="form-control" id="cardName" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="cardNumber" class="form-label">Número de tarjeta</label>
+                                <input type="text" class="form-control" id="cardNumber" required 
+                                       pattern="[0-9]{16}" maxlength="16" placeholder="1234 5678 9012 3456">
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label for="cardExpiry" class="form-label">Fecha de expiración</label>
+                                    <input type="text" class="form-control" id="cardExpiry" required 
+                                           placeholder="MM/YY" maxlength="5">
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label for="cardCVV" class="form-label">CVV</label>
+                                    <input type="text" class="form-control" id="cardCVV" required 
+                                           pattern="[0-9]{3,4}" maxlength="4">
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                        <button type="button" class="btn btn-success" id="process-payment-btn">Pagar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Quantity Modal -->
+        <div class="modal fade" id="quantityModal" tabindex="-1">
+            <div class="modal-dialog modal-sm">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Seleccionar Cantidad</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="quantity-selector">
+                            <button class="btn btn-outline-secondary" id="decrease-quantity">-</button>
+                            <input type="number" id="quantity-input" value="1" min="1" max="10">
+                            <button class="btn btn-outline-secondary" id="increase-quantity">+</button>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" id="add-to-cart-btn">Añadir al Carrito</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-white py-4 mt-5">
+        <div class="container text-center">
+            <p>&copy; 2025 E-commerce Store. Todos los derechos reservados.</p>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Custom JS -->
+    <script src="script.js"></script>
+</body>
+</html>

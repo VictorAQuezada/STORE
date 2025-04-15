@@ -11,21 +11,18 @@ document.addEventListener('DOMContentLoaded', () => {
 
 // Configuración de event listeners
 function setupEventListeners() {
-    // Búsqueda de productos
     document.getElementById('searchInput').addEventListener('input', filterProducts);
-    
-    // Botones de cantidad
     document.getElementById('decrease-quantity').addEventListener('click', () => updateQuantity('decrease'));
     document.getElementById('increase-quantity').addEventListener('click', () => updateQuantity('increase'));
-    
-    // Botón de añadir al carrito
     document.getElementById('add-to-cart-btn').addEventListener('click', addToCart);
-    
-    // Botón de checkout
     document.getElementById('checkout-btn').addEventListener('click', showPaymentModal);
-    
-    // Botón de procesar pago
     document.getElementById('process-payment-btn').addEventListener('click', processPayment);
+
+    // Nuevo: Botón para mostrar el carrito
+    document.getElementById('cart-btn').addEventListener('click', () => {
+        updateCartModal();
+        new bootstrap.Modal(document.getElementById('cartModal')).show();
+    });
 }
 
 // Obtener productos de la API
@@ -62,7 +59,7 @@ function displayProducts(productsToShow) {
 // Filtrar productos
 function filterProducts(e) {
     const searchTerm = e.target.value.toLowerCase();
-    const filteredProducts = products.filter(product => 
+    const filteredProducts = products.filter(product =>
         product.title.toLowerCase().includes(searchTerm) ||
         product.description.toLowerCase().includes(searchTerm)
     );
@@ -80,7 +77,6 @@ function showQuantityModal(productId) {
 function updateQuantity(action) {
     const input = document.getElementById('quantity-input');
     let value = parseInt(input.value);
-    
     if (action === 'increase' && value < 10) {
         input.value = value + 1;
     } else if (action === 'decrease' && value > 1) {
@@ -90,20 +86,20 @@ function updateQuantity(action) {
 
 // Añadir al carrito
 function addToCart() {
+    if (!selectedProduct) return;
+
     const quantity = parseInt(document.getElementById('quantity-input').value);
-    
     const existingItem = cart.find(item => item.product.id === selectedProduct.id);
+
     if (existingItem) {
         existingItem.quantity += quantity;
     } else {
-        cart.push({
-            product: selectedProduct,
-            quantity: quantity
-        });
+        cart.push({ product: selectedProduct, quantity });
     }
-    
+
     updateCartCount();
     bootstrap.Modal.getInstance(document.getElementById('quantityModal')).hide();
+    selectedProduct = null;
 }
 
 // Actualizar contador del carrito
@@ -123,7 +119,7 @@ function showPaymentModal() {
 function updateCartModal() {
     const cartItems = document.getElementById('cart-items');
     const cartTotal = document.getElementById('cart-total');
-    
+
     cartItems.innerHTML = cart.map(item => `
         <div class="cart-item">
             <img src="${item.product.image}" alt="${item.product.title}">
@@ -133,8 +129,8 @@ function updateCartModal() {
             </div>
         </div>
     `).join('');
-    
-    const total = cart.reduce((sum, item) => sum + (item.product.price * item.quantity), 0);
+
+    const total = cart.reduce((sum, item) => sum + item.product.price * item.quantity, 0);
     cartTotal.textContent = total.toFixed(2);
 }
 
@@ -145,7 +141,7 @@ function processPayment() {
         alert('Por favor, complete todos los campos correctamente.');
         return;
     }
-    
+
     generatePDF(cardName);
     resetCart();
     bootstrap.Modal.getInstance(document.getElementById('paymentModal')).hide();
@@ -162,17 +158,14 @@ function validatePaymentForm() {
 function generatePDF(customerName) {
     const { jsPDF } = window.jspdf;
     const doc = new jsPDF();
-    
-    // Encabezado
+
     doc.setFontSize(20);
     doc.text('Factura de Compra', 20, 20);
-    
-    // Datos del cliente
+
     doc.setFontSize(12);
     doc.text(`Cliente: ${customerName}`, 20, 40);
     doc.text(`Fecha: ${new Date().toLocaleDateString()}`, 20, 50);
-    
-    // Productos
+
     doc.text('Productos:', 20, 70);
     let y = 80;
     cart.forEach(item => {
@@ -180,13 +173,11 @@ function generatePDF(customerName) {
         doc.text(`${item.quantity} x $${item.product.price.toFixed(2)}`, 150, y);
         y += 10;
     });
-    
-    // Total
+
     const total = cart.reduce((sum, item) => sum + (item.product.price * item.quantity), 0);
     doc.setFontSize(14);
     doc.text(`Total: $${total.toFixed(2)}`, 150, y + 20);
-    
-    // Guardar PDF
+
     doc.save('factura.pdf');
 }
 
